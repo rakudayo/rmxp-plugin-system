@@ -29,7 +29,7 @@ This is my first script that I've posted here on the forums. Hopefully it's usef
 
 ####**Downloads**
 
-A demo project (old version of code) showing utility usage and Subversion (Just run Game.bat, instead of Game.rxproj NOTE: SVN metadata not included in the project).
+A demo project (old version of code) showing utility usage and Subversion (Just run Game.bat, instead of Game.rxproj).
 
 [RMXP Plugin System Demo (v1.0.4)](https://docs.google.com/viewer?a=v&pid=explorer&chrome=true&srcid=0B3Y-YsSmakHrMDBkYTNjY2YtNzI5NS00ZGUyLThkNzQtNGI0OGQxMzU3NTFh&hl=en)
 
@@ -48,7 +48,7 @@ A sample config file for the utility.
 
 [Sample config file](https://gist.github.com/1289767)
 
-The default Game.bat file used to launch RMXP (instead of Game.exe).
+The default Game.bat file used to launch RMXP (instead of Game.rxproj).
 
 [Sample Game.bat file](https://gist.github.com/1289779)
 
@@ -83,22 +83,35 @@ _What to Version_
 * The exported Ruby scripts
 * The script export digest (digest.txt)
 * The RMXP Plugin System scripts (so that everyone sharing your project has them)
-* Game.bat
+* Game.bat file
 
 
 ####**FAQ**
 
-* Does this utility work for RMVX? 
-    No, it needs to be modified to work with RMVX. I only own RMXP, but if anyone wants to modify it, feel free to fork me and make your changes.
+* _Does this utility work for RMVX?_
 
-* What versioning system does this utility work with? 
-    Theoretically, all of them. Exported files should be version-able by any versioning system that can version UTF8-encoded text files, which I think is all of them. I've tested this versioning two different RMXP projects with Subversion with no problems.
+    No, it needs to be modified to work with RMVX. I only own RMXP, but if 
+    anyone wants to modify it, feel free to fork me and make your changes.
 
-* When versioning the exported files, why do I get conflicts when there is no change in the files? 
-    Probably this is due to editing the exported file in a text editor or diff program which modified the newlines in the file. Try telling your versioning system to ignore new line differences or always convert them automatically.
+* _What versioning system does this utility work with?_
 
-* Why are my changes not exported after I close RMXP? 
-    You may want to check that you have not accidentally closed the command window that says, "DO NOT CLOSE THIS COMMAND WINDOW!!!". The export step should automatically execute from the batch script when you close RMXP.
+    Theoretically, all of them. Exported files should be version-able by any 
+    versioning system that can version UTF8-encoded text files, which I think 
+    is all of them. I've tested this versioning two different RMXP projects 
+    with Subversion with no problems.
+
+* _When versioning the exported files, why do I get conflicts when there is no change in the files?_
+
+    Probably this is due to editing the exported file in a text editor or diff
+    program which modified the newlines in the file. Try telling your 
+    versioning system to ignore new line differences or always convert them 
+    automatically.
+
+* _Why are my changes not exported after I close RMXP?_
+
+    You may want to check that you have not accidentally closed the command 
+    window that says, "DO NOT CLOSE THIS COMMAND WINDOW!!!". The export step 
+    should automatically execute from the batch script when you close RMXP.
 
 
 ####**Compatibility**
