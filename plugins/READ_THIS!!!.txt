@@ -1,0 +1,17 @@
+CAUTION: System will try to load any .rb files in this 
+directory as if they are plugins for the Plugin System.
+If you see something similar to the below error, then 
+there is a non-plugin ruby file in this directory:
+
+====================================================================================
+C:\>Game.bat
+...
+(eval):82:in `on_start': undefined method `[]' for false:FalseClass (NoMethodError)
+        from (eval):81:in `open'
+        from (eval):81:in `on_start'
+        from (eval):66:in `each_index'
+        from (eval):66:in `on_start'
+        from start_rmxp.rb:72
+        from start_rmxp.rb:71:in `each'
+        from start_rmxp.rb:71
+====================================================================================
