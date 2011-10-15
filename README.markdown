@@ -7,12 +7,13 @@
 
 Have you ever wanted to work on an RMXP game with a group of friends, but ran into trouble with conflicts when multiple people edit the same rxdata files? If you want to safely and efficiently version the data in your RMXP game, then read on!
 
-I have written a series of Ruby scripts to export all of the RMXP rxdata files (scripts, system data, maps, etc.) into plain-text files which are human-readable and can be easily versioned with a versioning system such as Subversion or Mercurial. I've also written scripts which can read these exported text files and import them back into rxdata files so that RMXP can read them. Now, anytime two people change a map, a script, or any other game data, all of the conflicts can be easily resolved in plain text.
+I have written a general plugin system for RMXP so that scripts can be run externally (using the normal Ruby interpreter) at startup and/or shutdown of RMXP. This allows for implementing more advanced functionality, such as exporting scripts and data from .rxdata files (scripts, system data, maps, etc.) into plain-text files which are human-readable and can be easily versioned with a versioning system such as Subversion or Mercurial. I've also written scripts which can read these exported text files and import them back into .rxdata files so that RMXP can read them. Now, anytime two people change a map, a script, or any other game data, all of the conflicts can be easily resolved in plain text.
 
 I've been careful to make sure that the RGSS objects are always exported in the same way, so that unnecessary conflicts are avoided. The data files are exported as YAML files and the RGSS scripts are exported as normal Ruby files. This provides other benefits beyond just versioning the data. For example, you could use your favorite text editor outside of RMXP to edit your scripts; just make sure you don't export the scripts before you import your changes. Also, seeing what changed in the YAML files when you do something in RMXP is really helpful in understanding how the game data works!
 
-This is my first script that I've posted here on the forums. Hopefully it's useful! Please give me suggestions or comments if you have any ideas how I could improve this utility.
-
+Some other ideas for plugins that could be written are:
+* A patcher script which downloads updates for your RGSS scripts.
+* A time and change logger script that records team member's work time between opening and closing RMXP and a comment regarding their changes. 
 
 ####**Features**
 
