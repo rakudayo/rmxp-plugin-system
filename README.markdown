@@ -1,5 +1,5 @@
 #Rxdata Versioning Utility
-###Version: 1.0.4
+###Version: 1.0.5
 
 ##By: Raku (rakudayo@gmail.com)
 
@@ -31,7 +31,7 @@ This is my first script that I've posted here on the forums. Hopefully it's usef
 
 A demo project (old version of code) showing utility usage and Subversion (Just run Game.bat, instead of Game.rxproj NOTE: SVN metadata not included in the project).
 
-[Rxdata Versioning Utility Demo (v1.0.2)](https://docs.google.com/leaf?id=0B3Y-YsSmakHrMmEwMzhhMGUtMWRkNy00NzBiLTlhM2QtZDRkNDk2ZmY4NWZm&sort=name&layout=list&num=50)
+[RMXP Plugin System Demo (v1.0.4)](https://docs.google.com/viewer?a=v&pid=explorer&chrome=true&srcid=0B3Y-YsSmakHrMDBkYTNjY2YtNzI5NS00ZGUyLThkNzQtNGI0OGQxMzU3NTFh&hl=en)
 
 
 ####**Sample Files**
@@ -62,49 +62,43 @@ _Requirements_
 
 * Ruby Interpreter - Get the most recent version here. It is required to run the utility scripts outside of RMXP. You will need a version with the YAML and Zlib modules (the latest version should have these).
 * RPG Maker XP - Obviously! :)
-* Windows XP - Not sure if this utility works on Windows Vista. The only problem I forsee could be the batch file commands. Since I don't have access to a Vista machine, could someone confirm this?
-* (Optional) Versioning System - If you want to keep track of versions of your exported data, you will need a versioning system like SVN, Mercurial, or Github.
+* Windows XP - I believe this should work on Windows Vista or Windows 7 also. The only potential problem I forsee could be the batch file commands.
+* (Optional) Versioning System - If you want to keep track of versions of your exported data, you will need a versioning system like Git, Mercurial, or SVN.
 
 _Setup_
 
-* Download the RMXP Data Exporter/Importer Utility above.
-* Back up your project (just copy it somewhere for safe-keeping). :)
-* Extract the archive into your RMXP project directory. NOTE: If you already have a Utility directory in the base directory of your RMXP project, you may want to extract to a temporary directory and change the name of the Utility directory to something else. Just make sure to update the SCRIPTS_DIR environment variable set in Game.bat (see above).
-* Optional: Modify any configuration parameters you want, in the config.yaml file, such as output directory paths for the YAML and Ruby files.
+* Download the latest version of RMXP Plugin System as a ZIP above.
+* Back up your project (just copy it somewhere for safe-keeping).
+* Extract the archive into a directory or your choice. NOTE: If you wish to use this in multiple projects, it is best to create a folder in the same directory as your projects and extract to that folder. Just make sure to update the PLUGIN_SYSTEM_ROOT and RMXP_PROJECT_ROOT variables set in Game.bat (see below default Game.bat).
+* Modify any configuration parameters you necessary, in the config.yaml file, such as output directory paths for the YAML and Ruby files.
 
 _Usage_
-Automated (recommended)
 
 * Just run Game.bat.
-* Kick back, relax, and let the batch file do everything for you. NOTE: It will ignore importing the first time it is run, since no data has been exported yet. When you close RMXP, all of the data will be exported (as long as you don't close the command window that Game.bat opened). :)
-
-Manual
-
-* Open a command prompt
-* Change to the scripts directory (default name is Utility).
-* > ruby script_importer.rb
-* > ruby data_importer.rb
-* > ruby logtime.rb (This is to log the time we started RMXP to determine if files were modified)
-* Open RPG Maker XP
-* Close RPG Maker XP
-* > ruby data_exporter.rb
-* > ruby script_exporter.rb
+* Kick back, relax, and let the batch file do everything for you. NOTE: It will ignore importing the first time it is run, since no data has been exported yet. When you close RMXP, all of the data will be exported (as long as you don't close the command window that Game.bat opened).
 
 _What to Version_
 
 * The exported data YAML files
 * The exported Ruby scripts
 * The script export digest (digest.txt)
-* All RMXP Exporter/Importer Utility scripts (so that everyone sharing your project has them)
-* Game.bat (if you are using it - I highly recommend to use it, since it is easy to forget to import or export)
+* The RMXP Plugin System scripts (so that everyone sharing your project has them)
+* Game.bat
 
 
 ####**FAQ**
 
-* Does this utility work for RMVX? No, it needs to be modified to work with RMVX. I only own RMXP, but if anyone wants to modify it, feel free to fork me and make your changes.
-* What versioning system does this utility work with? Theoretically, all of them. Exported files should be version-able by any versioning system that can version UTF8-encoded text files, which I think is all of them. I've tested this versioning two different RMXP projects with Subversion with no problems.
-* When versioning the exported files, why do I get conflicts when there is no change in the files? Probably this is due to editing the exported file in a text editor or diff program which modified the newlines in the file. Try telling your versioning system to ignore new line differences or always convert them automatically.
-* Why are my changes not exported after I close RMXP? If you ran the Game.bat file, you may want to check that you have not accidentally closed the command window that says, "DO NOT CLOSE THIS COMMAND WINDOW!!!". The export step should automatically execute from the batch script when you close RMXP. If you're manually running the scripts, then just run the export script (see Usage).
+* Does this utility work for RMVX? 
+    No, it needs to be modified to work with RMVX. I only own RMXP, but if anyone wants to modify it, feel free to fork me and make your changes.
+
+* What versioning system does this utility work with? 
+    Theoretically, all of them. Exported files should be version-able by any versioning system that can version UTF8-encoded text files, which I think is all of them. I've tested this versioning two different RMXP projects with Subversion with no problems.
+
+* When versioning the exported files, why do I get conflicts when there is no change in the files? 
+    Probably this is due to editing the exported file in a text editor or diff program which modified the newlines in the file. Try telling your versioning system to ignore new line differences or always convert them automatically.
+
+* Why are my changes not exported after I close RMXP? 
+    You may want to check that you have not accidentally closed the command window that says, "DO NOT CLOSE THIS COMMAND WINDOW!!!". The export step should automatically execute from the batch script when you close RMXP.
 
 
 ####**Compatibility**
@@ -115,16 +109,13 @@ This utility should be compatible with any script modifications, since it runs o
 
 ####**Credits and Thanks**
 
-* vgvgf: I modified his Table, Color, and Tone class implementations in Ruby.
-* Yeyinde: His forum topic here helped me figured out how to load the compressed scripts from the Scripts.rxdata file.
+* vgvgf: I modified his [Table, Color, and Tone class implementations](http://www.hbgames.org/forums/viewtopic.php?t=49838) in Ruby.
+* Yeyinde: His [forum topic here](http://www.hbgames.org/forums/viewtopic.php?f=11&t=21163) helped me figured out how to load the compressed scripts from the Scripts.rxdata file.
 
 
 ####**Author's Notes**
 
-* This is the final release of the Rxdata Versioning Utility. I have made an RMXP Plugin System which covers the functionality of this utility, plus much more. I'll post it on the forums shortly.
 * THIS UTILITY MODIFIES YOUR PROJECT'S .rxdata FILES! Make sure to back them up before using it.
-* If anyone can help me test this utility out on more RMXP projects, I would really appreciate it!
-* Since I don't have access to a Vista machine, could someone confirm if this utility works on Vista?
 * If you need Ruby implementations of the Table, Color, and Tone classes that can load and dump the .rxdata files that RMXP can read, they are included in the utility in rgss_internal.rb, or you can email me and I'll send them to you. :)
 
 
