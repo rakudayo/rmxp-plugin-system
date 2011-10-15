@@ -31,7 +31,7 @@ This is my first script that I've posted here on the forums. Hopefully it's usef
 
 A demo project (old version of code) showing utility usage and Subversion (Just run Game.bat, instead of Game.rxproj).
 
-[RMXP Plugin System Demo (v1.0.4)](https://docs.google.com/viewer?a=v&pid=explorer&chrome=true&srcid=0B3Y-YsSmakHrMDBkYTNjY2YtNzI5NS00ZGUyLThkNzQtNGI0OGQxMzU3NTFh&hl=en)
+[RMXP Plugin System Demo (v1.0.5)](https://docs.google.com/viewer?a=v&pid=explorer&chrome=true&srcid=0B3Y-YsSmakHrNWYzNjA5YzktNGJkZS00YWM5LTg0NDEtMmJiOGQ3YWFmNTUx&hl=en)
 
 
 ####**Sample Files**
