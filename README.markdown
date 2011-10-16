@@ -77,12 +77,12 @@ _Setup_
 * Back up your project (just copy it somewhere for safe-keeping).
 * Extract the archive into a directory or your choice. NOTE: If you wish to use this in multiple projects, it is best to create a folder in the same directory as your projects and extract to that folder. Just make sure to update the PLUGIN_SYSTEM_ROOT and RMXP_PROJECT_ROOT variables set in Game.bat (see below default Game.bat). A sample directory hierarchy is below:
 
-    C:\project
-    |-- RmxpPluginSystem
-    |-- ProjectA
-    |-- ProjectB
-    |-- ...
-    |-- ProjectZ
+    C:\project<br />
+    |-- RmxpPluginSystem<br />
+    |-- ProjectA<br />
+    |-- ProjectB<br />
+    |-- ...<br />
+    |-- ProjectZ<br />
 
   With the above structure, all projects can use the same version of the plugin system.
 
