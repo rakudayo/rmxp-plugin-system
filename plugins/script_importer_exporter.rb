@@ -2,12 +2,13 @@
 # Filename:    script_importer_exporter.rb
 #
 # Developer:   Raku (rakudayo@gmail.com)
+#              XXXX
 #
-# Description: This file contains a plugin for the RMXP Plugin System which 
-#  automatically exports all scripts in the Scripts.rxdata file to plain text Ruby files
+# Description: This file contains a plugin for the RM Plugin System which 
+#  automatically exports all scripts in the Scripts file to plain text Ruby files
 #  which can be versioned using a versioning system such as Subversion or Mercurial.
 #  When the system shuts down, all data is output into YAML and when the system 
-#  is started again, the YAML files are read back into the original Scripts.rxdata file.
+#  is started again, the YAML files are read back into the original Scripts file.
 #===============================================================================
 class ScriptImporterExporter < PluginBase
   # Register this plugin so that the system knows to execute it
@@ -23,7 +24,7 @@ class ScriptImporterExporter < PluginBase
   def on_start
     # Set up the directory paths
     $INPUT_DIR  = $PROJECT_DIR + '/' + $SCRIPTS_DIR + '/'
-    $OUTPUT_DIR = $PROJECT_DIR + '/' + $RXDATA_DIR + '/'
+    $OUTPUT_DIR = $PROJECT_DIR + '/' + $DATA_DIR + '/'
     
     print_separator(true)
     puts "  RGSS Script Import"
@@ -40,7 +41,7 @@ class ScriptImporterExporter < PluginBase
     # Create the output directory if it doesn't exist
     if not (File.exists? $OUTPUT_DIR and File.directory? $OUTPUT_DIR)
       puts "Error: Output directory #{$OUTPUT_DIR} does not exist."
-      puts "Hint: Check that the rxdata_dir config option in config.yaml is set correctly."
+      puts "Hint: Check that the data_dir config option in config.yaml is set correctly."
       puts
       exit
     end
@@ -101,8 +102,8 @@ class ScriptImporterExporter < PluginBase
         puts_verbose str if digest[i][2].upcase != "EMPTY"
       end
  
-      # Dump the scripts data structure to the RMXP's Scripts.rxdata file
-      File.open($OUTPUT_DIR + "Scripts.rxdata", File::WRONLY|File::TRUNC|File::CREAT|File::BINARY) do |outfile|
+      # Dump the scripts data structure to the RM's Script file
+      File.open($OUTPUT_DIR + "Scripts.#{$DATA_TYPE}", File::WRONLY|File::TRUNC|File::CREAT|File::BINARY) do |outfile|
         Marshal.dump(scripts, outfile)
       end
  
@@ -120,7 +121,7 @@ class ScriptImporterExporter < PluginBase
 
   def on_exit    
     # Set up the directory paths
-    $INPUT_DIR  = $PROJECT_DIR + '/' + $RXDATA_DIR + '/'
+    $INPUT_DIR  = $PROJECT_DIR + '/' + $DATA_DIR + '/'
     $OUTPUT_DIR = $PROJECT_DIR + '/' + $SCRIPTS_DIR + '/'
     
     print_separator(true)
@@ -132,7 +133,7 @@ class ScriptImporterExporter < PluginBase
     # Check if the input directory exists
     if not (File.exists? $INPUT_DIR and File.directory? $INPUT_DIR)
       puts "Error: Input directory #{$INPUT_DIR} does not exist."
-      puts "Hint: Check that the rxdata_dir path in config.yaml is set to the correct path."
+      puts "Hint: Check that the data_dir path in config.yaml is set to the correct path."
       exit
     end
  
@@ -141,7 +142,7 @@ class ScriptImporterExporter < PluginBase
       recursive_mkdir( $OUTPUT_DIR )
     end
  
-    if (not file_modified_since?($INPUT_DIR + "Scripts.rxdata", $STARTUP_TIME)) and (File.exists?($SCRIPTS_DIR + "/" + $EXPORT_DIGEST_FILE))
+    if (not file_modified_since?($INPUT_DIR + "Scripts.#{$DATA_TYPE}", $STARTUP_TIME)) and (File.exists?($SCRIPTS_DIR + "/" + $EXPORT_DIGEST_FILE))
       puts_verbose "No RGSS scripts need to be exported."
       puts_verbose
       return
@@ -151,7 +152,7 @@ class ScriptImporterExporter < PluginBase
  
     # Read in the scripts from script file
     scripts = nil
-    File.open($INPUT_DIR + "Scripts.rxdata", File::RDONLY|File::BINARY) do |infile|
+    File.open($INPUT_DIR + "Scripts.#{$DATA_TYPE}", File::RDONLY|File::BINARY) do |infile|
       scripts = Marshal.load(infile)
     end
  

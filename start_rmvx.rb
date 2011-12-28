@@ -2,9 +2,10 @@
 # Filename:    start_rmxp.rb
 #
 # Developer:   Raku (rakudayo@gmail.com)
+#              XXXX
 #
 # Description: This script creates all plugins in the Plugins directory and
-# executes their on_start event methods and starts RMXP.  When RMXP is closed,
+# executes their on_start event methods and starts RMVX.  When RMVX is closed,
 # the on_exit event method of each plugin is called.
 #===============================================================================
 
@@ -17,9 +18,9 @@ elsif OS_VERSION.index( "Windows" )
   $PROJECT_DIR = String.new( $PROJECT_DIR ).gsub! "/", "\\"
 end
 
-$DATA_TYPE = "rxdata"
+$DATA_TYPE = "rvdata"
 
-require 'rmxp/rgss'
+require 'rmvx/rgss2'
 require 'common'
 require 'plugin_base'
 
@@ -49,8 +50,8 @@ end
 #             SCRIPT
 #######################################
 
-# Make sure RMXP isn't already running
-exit if check_for_rmxp(true)
+# Make sure RMVX isn't already running
+exit if check_for_rmvx(true)
 
 # Get the list of plugins in the plugin directory
 plugins = Dir.entries( "plugins" )
@@ -90,7 +91,7 @@ puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 puts_verbose
 
 # Start RMXP
-command = 'START /B /WAIT /D"' + $PROJECT_DIR + '" Game.rxproj'
+command = 'START /B /WAIT /D"' + $PROJECT_DIR + '" Game.rvproj'
 system(command)
 
 # Get the list of plugins in the shutdown order
