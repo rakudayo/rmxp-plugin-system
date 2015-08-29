@@ -168,9 +168,14 @@ class DataImporterExporter < PluginBase
  
       # Handle default values for the System data file
       if files[i] == "System.#{$DATA_TYPE}"
-        # Prevent the 'magic_number' field of System from always conflicting
-        data.magic_number = $MAGIC_NUMBER unless $MAGIC_NUMBER == -1
-        
+		# Implement fix for RPG VXA - changed 'magic_number' to 'version_id'
+		if $DATA_TYPE == "rvdata2"
+			# Prevent the 'magic_number' field of System from always conflicting
+			data.version_id = $MAGIC_NUMBER unless $MAGIC_NUMBER == -1
+		else
+			# Prevent the 'magic_number' field of System from always conflicting
+			data.magic_number = $MAGIC_NUMBER unless $MAGIC_NUMBER == -1
+        end
         # Prevent the 'edit_map_id' field of System from conflicting
         data.edit_map_id = $DEFAULT_STARTUP_MAP unless $DEFAULT_STARTUP_MAP == -1
       end
