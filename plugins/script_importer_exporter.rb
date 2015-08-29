@@ -30,8 +30,8 @@ class ScriptImporterExporter < PluginBase
     puts "  RGSS Script Import"
     print_separator(true)
  
-    # Check if the input directory exists
-    if not (File.exists? $INPUT_DIR and File.directory? $INPUT_DIR)
+    # Check if the input directory exist
+    if not (File.exist? $INPUT_DIR and File.directory? $INPUT_DIR)
       puts_verbose "Input directory #{$INPUT_DIR} does not exist."
       puts_verbose "Nothing to import...skipping import."
       puts_verbose
@@ -39,7 +39,7 @@ class ScriptImporterExporter < PluginBase
     end
  
     # Create the output directory if it doesn't exist
-    if not (File.exists? $OUTPUT_DIR and File.directory? $OUTPUT_DIR)
+    if not (File.exist? $OUTPUT_DIR and File.directory? $OUTPUT_DIR)
       puts "Error: Output directory #{$OUTPUT_DIR} does not exist."
       puts "Hint: Check that the data_dir config option in config.yaml is set correctly."
       puts
@@ -49,7 +49,7 @@ class ScriptImporterExporter < PluginBase
     start_time = Time.now
  
     # Import the RGSS scripts from Ruby files
-    if File.exists?($INPUT_DIR + $EXPORT_DIGEST_FILE)
+    if File.exist?($INPUT_DIR + $EXPORT_DIGEST_FILE)
       # Load the export digest
       digest = []
       i = 0
@@ -130,19 +130,19 @@ class ScriptImporterExporter < PluginBase
  
     $STARTUP_TIME = load_startup_time || Time.now
  
-    # Check if the input directory exists
-    if not (File.exists? $INPUT_DIR and File.directory? $INPUT_DIR)
+    # Check if the input directory exist
+    if not (File.exist? $INPUT_DIR and File.directory? $INPUT_DIR)
       puts "Error: Input directory #{$INPUT_DIR} does not exist."
       puts "Hint: Check that the data_dir path in config.yaml is set to the correct path."
       exit
     end
  
     # Create the output directory if it doesn't exist
-    if not (File.exists? $OUTPUT_DIR and File.directory? $OUTPUT_DIR)
+    if not (File.exist? $OUTPUT_DIR and File.directory? $OUTPUT_DIR)
       recursive_mkdir( $OUTPUT_DIR )
     end
  
-    if (not file_modified_since?($INPUT_DIR + "Scripts.#{$DATA_TYPE}", $STARTUP_TIME)) and (File.exists?($SCRIPTS_DIR + "/" + $EXPORT_DIGEST_FILE))
+    if (not file_modified_since?($INPUT_DIR + "Scripts.#{$DATA_TYPE}", $STARTUP_TIME)) and (File.exist?($SCRIPTS_DIR + "/" + $EXPORT_DIGEST_FILE))
       puts_verbose "No RGSS scripts need to be exported."
       puts_verbose
       return

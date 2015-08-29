@@ -32,16 +32,16 @@ class DataImporterExporter < PluginBase
     puts "  RMXP Data Import"
     print_separator(true)
     
-    # Check if the input directory exists
-    if not (File.exists? $INPUT_DIR and File.directory? $INPUT_DIR)
+    # Check if the input directory exist
+    if not (File.exist? $INPUT_DIR and File.directory? $INPUT_DIR)
       puts "Input directory #{$INPUT_DIR} does not exist."
       puts "Nothing to import...skipping import."
       puts
       return
     end
  
-    # Check if the output directory exists
-    if not (File.exists? $OUTPUT_DIR and File.directory? $OUTPUT_DIR)
+    # Check if the output directory exist
+    if not (File.exist? $OUTPUT_DIR and File.directory? $OUTPUT_DIR)
       puts "Error: Output directory #{$OUTPUT_DIR} does not exist."
       puts "Hint: Check that the $DATA_DIR variable in paths.rb is set to the correct path."
       puts
@@ -121,15 +121,15 @@ class DataImporterExporter < PluginBase
  
     $STARTUP_TIME = load_startup_time || Time.now
  
-    # Check if the input directory exists
-    if not (File.exists? $INPUT_DIR and File.directory? $INPUT_DIR)
+    # Check if the input directory exist
+    if not (File.exist? $INPUT_DIR and File.directory? $INPUT_DIR)
       puts "Error: Input directory #{$INPUT_DIR} does not exist."
       puts "Hint: Check that the $DATA_DIR variable in paths.rb is set to the correct path."
       exit
     end
  
     # Create the output directory if it doesn't exist
-    if not (File.exists? $OUTPUT_DIR and File.directory? $OUTPUT_DIR)
+    if not (File.exist? $OUTPUT_DIR and File.directory? $OUTPUT_DIR)
       recursive_mkdir( $OUTPUT_DIR )
     end
  
