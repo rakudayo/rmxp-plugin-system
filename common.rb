@@ -14,7 +14,7 @@ require 'zlib'
 # Add bin directory to the Ruby search path
 #$LOAD_PATH << "C:/bin"
 
-require 'addons'
+require_relative 'addons'
 
 require 'yaml'
 

@@ -3,7 +3,7 @@
 # Module RGL defines the namespace for all modules and classes of the graph
 # library. The main module is RGL::Graph which defines the abstract behavior of
 # all graphs in the library.
-require 'rgl/enumerable_ext'
+require_relative 'enumerable_ext'
 
 RGL_VERSION = "0.4.0"
 
