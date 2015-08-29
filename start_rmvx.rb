@@ -20,9 +20,9 @@ end
 
 $DATA_TYPE = "rvdata"
 
-require 'rmvx/rgss2'
-require 'common'
-require 'plugin_base'
+require_relative 'rmvx/rgss2'
+require_relative 'common'
+require_relative 'plugin_base'
 
 #######################################
 #        LOCAL METHODS
