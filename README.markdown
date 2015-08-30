@@ -2,7 +2,7 @@
 ###Version: 1.0.6
 
 ##By: Raku (rakudayo@gmail.com)
-###Updated by: Gegerlan (gegerlan2@hotmail.com)
+###Updated by: Gegerlan (gegerlan2@hotmail.com) &
 ###			   Mobius (darmes@users.noreply.github.com)
 
 ####**Introduction**
