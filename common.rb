@@ -18,12 +18,18 @@ require_relative 'addons'
 
 require 'yaml'
 
+# Setup config filename
+case $DATA_TYPE
+when "rxdata"  ; config_filename = "RMXP Config.yaml"
+when "rvdata"  ; config_filename = "RMVX Config.yaml"
+when "rvdata2" ; config_filename = "RMVXA Config.yaml"
+end
 # Setup the config file path
 os_version = `ver`.strip
 if os_version.index( "Windows XP" )
-  $CONFIG_PATH = String.new( $PROJECT_DIR + "/Game.yaml" )
+  $CONFIG_PATH = String.new( $PROJECT_DIR + "/" + config_filename )
 elsif os_version.index( "Windows" )
-  $CONFIG_PATH = String.new( $PROJECT_DIR + "/Game.yaml" ).gsub! "/", "\\"
+  $CONFIG_PATH = String.new( $PROJECT_DIR + "/" + config_filename ).gsub! "/", "\\"
 end
 
 # Read the config YAML file
@@ -33,10 +39,10 @@ File.open( $CONFIG_PATH, "r+" ) do |configfile|
 end
 
 # Initialize configuration parameters
-$DATA_DIR            = config['data_dir'] || config['rxdata_dir'] || config['rvdata_dir']
+$DATA_DIR            = config['data_dir'] || config['rxdata_dir'] || config['rvdata_dir'] || config['rvdata2_dir']
 $YAML_DIR            = config['yaml_dir']
 $SCRIPTS_DIR         = config['scripts_dir']
-$DATA_IGNORE_LIST    = config['data_ignore_list'] || config['rxdata_ignore_list'] || config['rvdata_ignore_list']
+$DATA_IGNORE_LIST    = config['data_ignore_list'] || config['rxdata_ignore_list'] || config['rvdata_ignore_list'] || config['rvdata2_ignore_list']
 $VERBOSE             = config['verbose']
 $MAGIC_NUMBER        = config['magic_number']
 $DEFAULT_STARTUP_MAP = config['edit_map_id']
@@ -215,7 +221,23 @@ def check_for_rmvx( notify = false )
     return false
   end
 end
-
+#----------------------------------------------------------------------------
+# check_for_rmvxa: Checks if rpgvp.exe is running and, if so, exits.  Also
+# returns true if rmvxa was running.
+#   notify: A boolean for whether to print a notification if rmvxa is running.
+#----------------------------------------------------------------------------
+def check_for_rmvxa( notify = false )
+  if process_running?( "rpgvxace.exe" )
+    if notify
+	    puts "RPG Maker VXA is already running!  Please close it and try again. :)"
+      puts "Exiting..."
+      pause_prompt
+	  end
+	  return true
+  else
+    return false
+  end
+end
 #----------------------------------------------------------------------------
 # generate_filename: Generates a filename given an RGSS script entry.
 #   script: An entry for a script in the loaded Scripts file. This

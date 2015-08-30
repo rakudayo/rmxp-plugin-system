@@ -51,7 +51,7 @@ end
 #######################################
 
 # Make sure RMVX isn't already running
-exit if check_for_rmvx(true)
+exit if check_for_rmvxa(true)
 
 # Get the list of plugins in the plugin directory
 plugins = Dir.entries( "plugins" )
