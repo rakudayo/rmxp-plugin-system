@@ -137,7 +137,7 @@ class DataImporterExporter < PluginBase
     files = Dir.entries( $INPUT_DIR )
     files -= $DATA_IGNORE_LIST
     files = files.select { |e| File.extname(e) == ".#{$DATA_TYPE}" }
-    files = files.select { |e| file_modified_since?($INPUT_DIR + e, $STARTUP_TIME) or not data_file_exported?($INPUT_DIR + e) }
+    files = files.select { |e| file_modified_since?($INPUT_DIR + e, $STARTUP_TIME) or not data_file_exported?($INPUT_DIR + e) } unless $RE_EXPORT == true
     files.sort!
  
     if files.empty?

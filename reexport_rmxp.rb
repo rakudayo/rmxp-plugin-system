@@ -18,6 +18,7 @@ elsif OS_VERSION.index( "Windows" )
 end
 
 $DATA_TYPE = "rxdata"
+$RE_EXPORT = true
 
 require_relative 'rmxp/rgss'
 require_relative 'common'

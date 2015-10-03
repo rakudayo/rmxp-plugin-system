@@ -19,6 +19,7 @@ elsif OS_VERSION.index( "Windows" )
 end
 
 $DATA_TYPE = "rvdata2"
+$RE_EXPORT = true
 
 require_relative 'rmvxa/rgss3'
 require_relative 'common'
