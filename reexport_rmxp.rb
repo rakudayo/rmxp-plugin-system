@@ -18,6 +18,7 @@ elsif OS_VERSION.index( "Windows" )
 end
 
 $DATA_TYPE = "rxdata"
+$RE_EXPORT = true
 
 require_relative 'rmxp/rgss'
 require_relative 'common'
@@ -49,9 +50,6 @@ end
 #             SCRIPT
 #######################################
 
-# Make sure RMXP isn't already running
-exit if check_for_rmxp(true)
-
 # Get the list of plugins in the plugin directory
 plugins = Dir.entries( "plugins" )
 plugins = plugins.select { |filename| File.extname(filename) == ".rb" }
@@ -69,30 +67,6 @@ plugins.each do |plugin|
   end
 end
 
-# Get the list of plugins in the startup order
-plugins = get_plugin_order( :on_start )
-
-# Create each plugin object
-plugins.collect! { |plugin| eval( plugin + ".new" ) }
-
-# Execute each plugin's on_start event
-plugins.each do |plugin|
-  plugin.on_start
-end
-
-# Dump the sytem time at startup into a file to read later
-dump_startup_time
-
-# Definitely do not want the user to close the command window
-puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-puts "!!!DO NOT CLOSE THIS COMMAND WINDOW!!!"
-puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-puts_verbose
-
-# Start RMXP
-command = 'START /B /WAIT /D"' + $PROJECT_DIR + '" Game.rxproj'
-system(command)
-
 # Get the list of plugins in the shutdown order
 plugins = get_plugin_order( :on_exit )
 
@@ -103,6 +77,3 @@ plugins.collect! {|plugin| eval( plugin + ".new" )}
 plugins.each do |plugin|
   plugin.on_exit
 end
-
-# Delete the startup timestamp
-load_startup_time(true)

@@ -1,20 +1,21 @@
 #Rxdata Versioning Utility
-###Version: 1.0.5
+###Version: 1.0.6
 
 ##By: Raku (rakudayo@gmail.com)
-###Updated by: Gegerlan (gegerlan2@hotmail.com)
+###Updated by: Gegerlan (gegerlan2@hotmail.com) &
+###			   Mobius (darmes@users.noreply.github.com)
 
 ####**Introduction**
 
-Have you ever wanted to work on an RPG Maker XP (RMXP) or RPG Maker VX (RMVX) game with a group of friends, but ran into trouble with conflicts when multiple people edit the same rxdata files? If you want to safely and efficiently version the data in your game, then read on!
+Have you ever wanted to work on an RPG Maker XP (RMXP), RPG Maker VX (RMVX), or RPG Maker VX Ace (RMVXA) game with a group of friends, but ran into trouble with conflicts when multiple people edit the same rxdata files? If you want to safely and efficiently version the data in your game, then read on!
 
-I have written a general plugin system for RPG Maker XP and VX so that scripts can be run externally (using the normal Ruby interpreter) at startup and/or shutdown of RMXP. This allows for implementing more advanced functionality, such as exporting scripts and data from .rxdata files (scripts, system data, maps, etc.) into plain-text files which are human-readable and can be easily versioned with a versioning system such as Git, Subversion or Mercurial. I've also written scripts which can read these exported text files and import them back into .rxdata files so that RMXP can read them. Now, anytime two people change a map, a script, or any other game data, all of the conflicts can be easily resolved in plain text.
+I have written a general plugin system for RPG Maker XP, VX, and VXA so that scripts can be run externally (using the normal Ruby interpreter) at startup and/or shutdown of RMXP. This allows for implementing more advanced functionality, such as exporting scripts and data from .rxdata files (scripts, system data, maps, etc.) into plain-text files which are human-readable and can be easily versioned with a versioning system such as Git, Subversion or Mercurial. I've also written scripts which can read these exported text files and import them back into .rxdata files so that RMXP can read them. Now, anytime two people change a map, a script, or any other game data, all of the conflicts can be easily resolved in plain text.
 
 I've been careful to make sure that the RGSS objects are always exported in the same way, so that unnecessary conflicts are avoided. The data files are exported as YAML files and the RGSS scripts are exported as normal Ruby files. This provides other benefits beyond just versioning the data. For example, you could use your favorite text editor outside of RMXP to edit your scripts; just make sure you don't export the scripts before you import your changes. Also, seeing what changed in the YAML files when you do something in RMXP is really helpful in understanding how the game data works!
 
 Some other ideas for plugins that could be written are:
 * A patcher script which downloads updates for your RGSS scripts.
-* A time and change logger script that records team member's work time between opening and closing RMXP or RMVX and a comment regarding their changes. 
+* A time and change logger script that records team member's work time between opening and closing RMXP, RMVX, or RMVXA and a comment regarding their changes. 
 
 ####**Features**
 
@@ -23,13 +24,13 @@ _General_
 * Plugin system behavior is configurable via a config.yaml file.
 
 _DataImporterExporter plugin_
-* Exports .rxdata or .rvdata files (except Scripts) to text files in the YAML data format.
-* Imports YAML files back into .rxdata or .rvdata files that RPG Maker editor can read.
-* Only exports rvdata and rxdata files if they need to be exported (i.e. have been modified since RMXP was opened or haven't been exported yet).
+* Exports .rxdata, .rvdata, or .rvdata2 files (except Scripts) to text files in the YAML data format.
+* Imports YAML files back into .rxdata, .rvdata, or .rvdata2 files that RPG Maker editor can read.
+* Only exports .rxdata, .rvdata, or .rvdata2 files if they need to be exported (i.e. have been modified since RMXP was opened or haven't been exported yet).
 
 _ScriptImporterExporter plugin_
 * Exports all scripts contained in Scripts to individual Ruby files (via the ScriptImportExporter plugin).
-* Imports Ruby scripts previously exported back into a Scripts.rxdata (RMXP) or Scripts.rvdata (RMVX) file that RPG Maker can read.
+* Imports Ruby scripts previously exported back into a Scripts.rxdata (RMXP), Scripts.rvdata (RMVX), or Scripts.rvdata2 (RMVXA) file that RPG Maker can read.
 * Only exports scripts if they are not empty (for example, place-holder scripts)
 * Cleanup script (called clean.rb) provided to help identify stale scripts (i.e. scripts which are added in RPG Makers's script editor, exported, and then later removed from the script editor, but still remain in your scripts directory).
 
@@ -70,7 +71,9 @@ _Requirements_
 * Ruby Interpreter - Get the [most recent version here](http://www.ruby-lang.org/en/). It is required to run the utility scripts outside of RMXP. You will need a version with the YAML and Zlib modules.
 * RPG Maker XP - For RMXP games
 * RPG Maker VX - For RMVX games
-* Windows XP - I believe this should work on Windows Vista or Windows 7 also. The only potential problem I forsee could be the batch file commands.
+* RPG Maker VX Ace - For RMVXA games
+* Windows XP - I believe this should work on Windows Vista also. The only potential problem I forsee could be the batch file commands.
+* Windows 7 - Tested and working on windows 7.
 * (Optional) Versioning System - If you want to keep track of versions of your exported data, you will need a versioning system like [Git](http://git-scm.com/), [Mercurial](http://mercurial.selenic.com/), or [Subversion](http://subversion.apache.org/).
 
 _Setup_
@@ -88,11 +91,14 @@ _Setup_
 
   With the above structure, all projects can use the same version of the plugin system.
 
-* Modify any configuration parameters you necessary, in the config.yaml file, such as output directory paths for the YAML and Ruby files.
+* In the folder "default batch files", copy the batch file for your project type to your project folder. I.e. "Start RMXP.bat" for RMXP projects.
+* After copying the batch file, open it with a text editor (like notepad) and find the line " SET RMXP_PROJECT_ROOT="../Project1" ". If you followed the directory setup above, then all you'll need to do is change 'Project1' to your project folder's name.
+* In the folder "default config files", copy the config file for your project type to your project folder. I.e. "RMXP Config.yaml" for RMXP projects.
+* Modify any configuration parameters as necessary, in the config.yaml file, such as output directory paths for the YAML and Ruby files.
 
 _Usage_
 
-* Just run Game.bat.
+* Just run the 'Start' batch file.
 * Kick back, relax, and let the batch file do everything for you. NOTE: It will ignore importing the first time it is run, since no data has been exported yet. When you close RMXP, all of the data will be exported (as long as you don't close the command window that Game.bat opened).
 
 _What to Version_
@@ -101,14 +107,14 @@ _What to Version_
 * The exported Ruby scripts
 * The script export digest (digest.txt)
 * The RMXP Plugin System scripts (so that everyone sharing your project has them)
-* Game.bat file
+* 'Start' batch file
 
 
 ####**FAQ**
 
-* _Does this utility work for RMVX?_
+* _Does this utility work for RMVX and/or RMVXA?_
 
-    Yes, by running _start_rmvx.rb_.
+    Yes, by using the different 'Start' batch files.
 
 * _What versioning system does this utility work with?_
 
