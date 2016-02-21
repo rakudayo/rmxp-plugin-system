@@ -198,6 +198,19 @@ def check_for_rmxp( notify = false )
   end
 end
 
+def check_for_gemini( notify = false )
+  if process_running?( "gemini.exe" )
+    if notify
+      puts "Gemini is already running!  Please close it and try again. :)"
+      puts "Exiting..."
+      pause_prompt
+    end
+    return true
+  else
+    return false
+  end
+end
+
 #----------------------------------------------------------------------------
 # generate_filename: Generates a filename given an RGSS script entry.
 #   script: An entry for a script in the loaded Scripts.rxdata file. This

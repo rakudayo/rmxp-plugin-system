@@ -10,6 +10,8 @@
 
 # Setup the project directory from the command-line argument
 OS_VERSION = `ver`.strip
+USE_GEMINI = true
+GEMINI_PATH = 'C:\Program Files (x86)\Gemini'
 $PROJECT_DIR = ARGV[0]
 if OS_VERSION.index( "Windows XP" )
   $PROJECT_DIR = String.new( $PROJECT_DIR )
@@ -48,7 +50,11 @@ end
 #######################################
 
 # Make sure RMXP isn't already running
-exit if check_for_rmxp(true)
+if USE_GEMINI
+	exit if check_for_gemini(true)
+else
+	exit if check_for_rmxp(true)
+end
 
 # Get the list of plugins in the plugin directory
 plugins = Dir.entries( "plugins" )
@@ -88,8 +94,21 @@ puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 puts_verbose
 
 # Start RMXP
-command = 'START /B /WAIT /D"' + $PROJECT_DIR + '" Game.rxproj'
-system(command)
+if USE_GEMINI
+	command = 'START /wait /b /d "' + GEMINI_PATH + '" Gemini.exe'
+	system(command)
+	puts "Waiting Gemini (check done every 3 secconds)"
+	while process_running?("gemini.exe")
+		sleep 3
+	end
+else
+	command = 'START /wait /b /d "' + $PROJECT_DIR + '" Game.rxproj'
+	system(command)
+	puts "Waiting RPGXP (check done every 3 secconds)"
+	while process_running?("rpgxp.exe")
+		sleep 3
+	end
+end
 
 # Get the list of plugins in the shutdown order
 plugins = get_plugin_order( :on_exit )
