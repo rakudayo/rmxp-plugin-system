@@ -12,7 +12,7 @@
 # Set.  This can be configured by the client, however, when an AdjacencyGraph
 # is created.
 
-require 'rgl/mutable'
+require './rgl/mutable'
 require 'set'
 
 module RGL

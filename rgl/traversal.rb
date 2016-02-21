@@ -9,9 +9,9 @@
 # Visitor[http://www.boost.org/libs/graph/doc/visitor_concepts.html] Concepts
 # in a slightly modified fashion (especially for the RGL::DFSIterator).
 
-require 'rgl/base'
+require './rgl/base'
 require 'rubygems' rescue LoadError # If using stream gem
-require 'stream'
+require './stream'
 
 module RGL
 
@@ -236,7 +236,7 @@ module RGL
     # to record all tree edges of the search tree in the result.
 
     def bfs_search_tree_from (v)
-      require 'rgl/adjacency'
+      require './rgl/adjacency'
       bfs  = bfs_iterator(v)
       tree = DirectedAdjacencyGraph.new
       bfs.set_tree_edge_event_handler { |from, to|

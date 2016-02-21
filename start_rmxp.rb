@@ -17,11 +17,9 @@ elsif OS_VERSION.index( "Windows" )
   $PROJECT_DIR = String.new( $PROJECT_DIR ).gsub! "/", "\\"
 end
 
-$DATA_TYPE = "rxdata"
 
-require 'rmxp/rgss'
-require 'common'
-require 'plugin_base'
+require './common'
+require './plugin_base'
 
 #######################################
 #        LOCAL METHODS

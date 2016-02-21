@@ -9,8 +9,8 @@
 #  be run before or after, as well as methods for calling on startup and on
 #  shutdown of the system.
 #===============================================================================
-require 'rgl/adjacency'
-require 'rgl/topsort.rb'
+require './rgl/adjacency'
+require './rgl/topsort.rb'
 
 class PluginBase
   @@plugins = []
