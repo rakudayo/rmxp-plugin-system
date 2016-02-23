@@ -18,6 +18,9 @@ require './addons'
 
 require 'yaml'
 
+# Setup the Gemini path
+$GEMINI_PATH = 'D:\Programmi (x86)\Gemini'
+
 # Setup the config file path
 os_version = `ver`.strip
 if os_version.index( "Windows XP" )

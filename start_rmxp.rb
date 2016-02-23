@@ -10,8 +10,7 @@
 
 # Setup the project directory from the command-line argument
 OS_VERSION = `ver`.strip
-USE_GEMINI = true
-GEMINI_PATH = 'C:\Program Files (x86)\Gemini'
+USE_GEMINI = (ARGV[1] == "1" ? true : false)
 $PROJECT_DIR = ARGV[0]
 if OS_VERSION.index( "Windows XP" )
   $PROJECT_DIR = String.new( $PROJECT_DIR )
@@ -95,7 +94,7 @@ puts_verbose
 
 # Start RMXP
 if USE_GEMINI
-	command = 'START /wait /b /d "' + GEMINI_PATH + '" Gemini.exe'
+	command = 'START /wait /b /d "' + $GEMINI_PATH + '" Gemini.exe'
 	system(command)
 	puts "Waiting Gemini (check done every 3 secconds)"
 	while process_running?("gemini.exe")
