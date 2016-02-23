@@ -1,6 +1,6 @@
 # mutable.rb
 
-require 'rgl/base'
+require './rgl/base'
 
 module RGL
 
