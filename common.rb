@@ -14,7 +14,7 @@ require 'zlib'
 # Add bin directory to the Ruby search path
 #$LOAD_PATH << "C:/bin"
 
-require 'addons'
+require_relative 'addons'
 
 require 'yaml'
 
@@ -138,7 +138,7 @@ end
 #----------------------------------------------------------------------------
 def data_file_exported?(filename)
   exported_filename = $PROJECT_DIR + '/' + $YAML_DIR + '/' + File.basename(filename, File.extname(filename)) + ".yaml"
-  return File.exists?( exported_filename )
+  return File.exist?( exported_filename )
 end
 
 #----------------------------------------------------------------------------
@@ -157,7 +157,7 @@ end
 #----------------------------------------------------------------------------
 def load_startup_time(delete_file = false)
   t = nil
-  if File.exists?( $PROJECT_DIR + '/' + $TIME_LOG_FILE )
+  if File.exist?( $PROJECT_DIR + '/' + $TIME_LOG_FILE )
     File.open( $PROJECT_DIR + '/' + $TIME_LOG_FILE, "r+" ) do |infile|
       t = Marshal.load( infile )
     end

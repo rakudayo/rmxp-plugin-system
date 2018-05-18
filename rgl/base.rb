@@ -3,7 +3,7 @@
 # Module RGL defines the namespace for all modules and classes of the graph
 # library. The main module is RGL::Graph which defines the abstract behavior of
 # all graphs in the library.
-require 'rgl/enumerable_ext'
+require_relative 'enumerable_ext'
 
 RGL_VERSION = "0.4.0"
 
@@ -32,7 +32,7 @@ module RGL
       end
 
       # Create a new DirectedEdge with source _a_ and target _b_.
-      def initialize (a,b)
+      def initialize(a,b)
         @source, @target = a,b
       end
       
@@ -103,14 +103,14 @@ module RGL
     # The each_vertex iterator defines the set of vertices. This method must be
     # defined by concrete graph classes. It defines the BGL VertexListGraph
     # concept.
-    def each_vertex () # :yields: v
+    def each_vertex() # :yields: v
       raise NotImplementedError
     end
 
     # The each_adjacent iterator defines the out edges of vertex _v_. This
     # method must be defined by concrete graph classes. Its defines the BGL
     # IncidenceGraph concept.
-    def each_adjacent (v) # :yields: v
+    def each_adjacent(v) # :yields: v
       raise NotImplementedError
     end
 
@@ -121,7 +121,7 @@ module RGL
     # can be implemented using each_vertex and each_adjacent. However for
     # undirected graph the function is inefficient because we must not yield
     # (v,u) if we already visited edge (u,v).
-    def each_edge (&block)
+    def each_edge(&block)
       if directed?
         each_vertex { |u|
           each_adjacent(u) { |v| yield u,v }
@@ -165,7 +165,7 @@ module RGL
     end
 
     # Returns an array of vertices adjacent to vertex _v_.
-    def adjacent_vertices (v)
+    def adjacent_vertices(v)
       r = []
       each_adjacent(v) {|u| r << u}
       r
@@ -173,7 +173,7 @@ module RGL
 
     # Returns the number of out-edges (for directed graphs) or the number of
 		# incident edges (for undirected graphs) of vertex _v_.
-    def out_degree (v)
+    def out_degree(v)
       r = 0
       each_adjacent(v) { |u| r += 1}
       r

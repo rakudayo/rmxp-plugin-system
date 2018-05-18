@@ -1,6 +1,6 @@
 # mutable.rb
 
-require 'rgl/base'
+require_relative 'base'
 
 module RGL
 
@@ -13,7 +13,7 @@ module RGL
     # Add a new vertex _v_ to the graph.  If the vertex is already in the
     # graph (tested via eql?), the method does nothing.
 
-    def add_vertex (v)
+    def add_vertex(v)
       raise NotImplementedError
     end
 
@@ -25,13 +25,13 @@ module RGL
     # will appear in the out-edges of v.  Put another way, v will be adjacent
     # to u and u will be adjacent to v. 
 
-    def add_edge (u, v)
+    def add_edge(u, v)
       raise NotImplementedError
     end
 
     # Add all objects in _a_ to the vertex set.
 
-    def add_vertices (*a)
+    def add_vertices(*a)
       a.each { |v| add_vertex v }
     end
 
@@ -39,7 +39,7 @@ module RGL
     # array can be both two-element arrays or instances of DirectedEdge or
     # UnDirectedEdge. 
 
-    def add_edges (*edges)
+    def add_edges(*edges)
       edges.each { |edge| add_edge(edge[0], edge[1]) }
     end
 
@@ -49,7 +49,7 @@ module RGL
     # Postcondition: num_vertices is one less, _v_ no longer appears in the
     # vertex set of the graph, and there no edge with source or target _v_.
 
-    def remove_vertex (v)
+    def remove_vertex(v)
       raise NotImplementedError
     end
 
@@ -59,14 +59,14 @@ module RGL
     # Precondition: u and v are vertices in the graph.
     # Postcondition: (u,v) is no longer in the edge set for g.
 
-    def remove_edge (u, v)
+    def remove_edge(u, v)
       raise NotImplementedError
     end
 
     # Remove all vertices specified by the array a from the graph by calling
     # remove_vertex.
 
-    def remove_vertices (*a)
+    def remove_vertices(*a)
       a.each { |v| remove_vertex v }
     end
 

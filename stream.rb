@@ -180,7 +180,7 @@ module Stream
 
 	# Create a new IntervalStream with upper bound _stop_. stop - 1 is the last
 	# element. By default _stop_ is zero which means that the stream is empty.
-	def initialize (stop=0)
+	def initialize(stop=0)
 	  @stop = stop - 1
 	  set_to_begin
 	end
@@ -192,7 +192,7 @@ module Stream
 	def set_to_begin; @pos = -1; end
 
 	# Increment the upper bound by incr.
-	def increment_stop (incr=1); @stop += incr; end
+	def increment_stop(incr=1); @stop += incr; end
 
 	def basic_forward; @pos += 1; end
 	def basic_backward;  @pos -= 1; @pos + 1; end
@@ -211,7 +211,7 @@ module Stream
 	attr_reader :wrapped_stream
 
 	# Create a new WrappedStream wrapping the Stream _otherStream_.
-	def initialize (otherStream)
+	def initialize(otherStream)
 	  @wrapped_stream = otherStream
 	end
 
@@ -240,7 +240,7 @@ module Stream
 
 	# Create a new FilteredStream wrapping _otherStream_ and selecting all its
 	# elements which satisfy the condition defined by the block_filter_.
-	def initialize (otherStream, &filter)
+	def initialize(otherStream, &filter)
 	  super otherStream
 	  @filter = filter
 	  @positionHolder = IntervalStream.new
@@ -308,7 +308,7 @@ module Stream
 	# Create a reversing wrapper for the reversable stream _otherStream_. If
 	# _otherStream_ does not support backward moving a NotImplementedError is signaled
 	# on the first backward move.
-	def initialize (otherStream)
+	def initialize(otherStream)
 	  super otherStream
 	  set_to_begin
 	end
@@ -342,7 +342,7 @@ module Stream
 	##
 	# Creates a new MappedStream wrapping _otherStream_ which calls the block
 	# _mapping_ on each move.
-	def initialize (otherStream, &mapping)
+	def initialize(otherStream, &mapping)
 	  super otherStream
 	  @mapping = mapping
 	end
@@ -367,7 +367,7 @@ module Stream
 	private :streamOfStreams
 
 	# Creates a new ConcatenatedStream wrapping the stream of streams _streamOfStreams_.
-	def initialize (streamOfStreams)
+	def initialize(streamOfStreams)
 	  super
 	  set_to_begin
 	end
@@ -467,7 +467,7 @@ module Stream
 	#
 	# If a block is given to new, than it is called with the new ImplicitStream
 	# stream as parameter letting the client overwriting the default blocks.
-	def initialize (otherStream=nil)
+	def initialize(otherStream=nil)
 	  if otherStream
 		@wrapped_stream = otherStream
 		@at_beginning_proc = proc {otherStream.at_beginning?}
@@ -509,7 +509,7 @@ module Stream
   ##
   # Return a Stream::FilteredStream which iterates over all my elements
   # satisfying the condition specified  by the block.
-  def filtered (&block); FilteredStream.new(self,&block); end
+  def filtered(&block); FilteredStream.new(self,&block); end
 
   # Create a Stream::ReversedStream wrapper on self.
   def reverse; ReversedStream.new self; end
@@ -517,7 +517,7 @@ module Stream
   # Create a Stream::MappedStream wrapper on self. Instead of returning the stream
   # element on each move, the value of calling _mapping_ is returned instead. See
   # Stream::MappedStream for examples.
-  def collect (&mapping); MappedStream.new(self, &mapping); end
+  def collect(&mapping); MappedStream.new(self, &mapping); end
 
   # Create a Stream::ConcatenatedStream on self, which must be a stream of streams.
   def concatenate; ConcatenatedStream.new self; end
@@ -529,19 +529,19 @@ module Stream
   #    [i,-i].create_stream
   #  }.
   #  s.to_a ==> [1, -1, 2, -2, 3, -3]
-  def concatenate_collected (&mapping); self.collect(&mapping).concatenate; end
+  def concatenate_collected(&mapping); self.collect(&mapping).concatenate; end
 
   # Create a Stream::ConcatenatedStream by concatenatating the receiver and _otherStream_
   #
   #  (%w(a b c).create_stream + [4,5].create_stream).to_a ==> ["a", "b", "c", 4, 5]
-  def + (otherStream)
+  def +(otherStream)
 	[self, otherStream].create_stream.concatenate
   end
 
   # Create a Stream::ImplicitStream which wraps the receiver stream by modifying one
   # or more basic methods of the receiver. As an example the method remove_first uses
   # #modify to create an ImplicitStream which filters the first element away.
-  def modify (&block); ImplicitStream.new(self, &block); end
+  def modify(&block); ImplicitStream.new(self, &block); end
 
   # Returns a Stream::ImplicitStream wrapping a Stream::FilteredStream, which
   # eliminates the first element of the receiver.
