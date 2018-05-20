@@ -19,9 +19,20 @@ end
 
 $DATA_TYPE = "rxdata"
 
-require 'rmxp/rgss'
-require 'common'
-require 'plugin_base'
+require_relative 'rmxp/rgss'
+require_relative 'common'
+require_relative 'plugin_base'
+
+begin
+    require 'listen'
+    require 'wdm'
+rescue LoadError
+    puts "Installing listen and wdm gems, make sure you have internet connectivity"
+    `gem install listen`
+    `gem install wdm`
+    puts "Installation Successful! Please restart the script!"
+    exit
+end
 
 #######################################
 #        LOCAL METHODS
@@ -36,7 +47,7 @@ require 'plugin_base'
 # event:  The symbol representing the event.  Valid values are
 #         :on_start and :on_shutdown
 #=====================================================================
-def get_plugin_order( event )
+def get_plugin_order(event)
 	if event == :on_start
 	  return PluginBase::get_startup_plugin_order
 	else
@@ -65,7 +76,7 @@ plugins.each do |plugin|
   plugin_path = "plugins\\" + plugin
   File.open( plugin_path, "r+" ) do |infile|
     code = infile.read( File.size( plugin_path ) )
-    eval( code )
+    eval(code)
   end
 end
 
@@ -88,6 +99,21 @@ puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 puts "!!!DO NOT CLOSE THIS COMMAND WINDOW!!!"
 puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 puts_verbose
+
+# P.S. too bored to refactor :(
+listener = Listen.to($PROJECT_DIR + $DATA_DIR) do |modified, added, removed|
+    # Get the list of plugins in the shutdown order
+    plugins = get_plugin_order( :on_exit )
+
+    # Create each plugin object
+    plugins.collect! {|plugin| eval( plugin + ".new" )}
+
+    # Execute each plugin's on_exit event
+    plugins.each do |plugin|
+        plugin.on_exit
+    end
+end
+listener.start
 
 # Start RMXP
 command = 'START /B /WAIT /D"' + $PROJECT_DIR + '" Game.rxproj'

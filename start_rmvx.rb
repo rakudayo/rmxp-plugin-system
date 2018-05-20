@@ -24,6 +24,16 @@ require 'rmvx/rgss2'
 require 'common'
 require 'plugin_base'
 
+begin
+    require 'listen'
+rescue LoadError
+    puts "Installing listen and wdm gems, make sure you have internet connectivity"
+    `gem install listen`
+    `gem install wdm`
+    puts "Installation Successful! Please restart the script!"
+    exit
+end
+
 #######################################
 #        LOCAL METHODS
 #######################################
@@ -89,6 +99,21 @@ puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 puts "!!!DO NOT CLOSE THIS COMMAND WINDOW!!!"
 puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 puts_verbose
+
+# P.S. too bored to refactor :(
+listener = Listen.to($PROJECT_DIR + $DATA_DIR) do |modified, added, removed|
+    # Get the list of plugins in the shutdown order
+    plugins = get_plugin_order( :on_exit )
+
+    # Create each plugin object
+    plugins.collect! {|plugin| eval( plugin + ".new" )}
+
+    # Execute each plugin's on_exit event
+    plugins.each do |plugin|
+        plugin.on_exit
+    end
+end
+listener.start
 
 # Start RMXP
 command = 'START /B /WAIT /D"' + $PROJECT_DIR + '" Game.rvproj'

@@ -7,6 +7,6 @@
 #    of RMXP's .rxdata files.
 #===============================================================================
 
-require 'rmxp/rgss_internal'
-require 'rmxp/rgss_rpg'
-require 'rmxp/rgss_mod'
+require_relative 'rgss_internal'
+require_relative 'rgss_rpg'
+require_relative 'rgss_mod'

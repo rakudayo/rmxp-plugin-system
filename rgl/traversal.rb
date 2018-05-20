@@ -9,9 +9,9 @@
 # Visitor[http://www.boost.org/libs/graph/doc/visitor_concepts.html] Concepts
 # in a slightly modified fashion (especially for the RGL::DFSIterator).
 
-require 'rgl/base'
+require_relative 'base'
 require 'rubygems' rescue LoadError # If using stream gem
-require 'stream'
+require_relative '../stream'
 
 module RGL
 
@@ -20,7 +20,7 @@ module RGL
     attr_accessor :graph
 
     # Creates a new GraphWrapper on _graph_.
-    def initialize (graph)
+    def initialize(graph)
       @graph = graph
     end
 
@@ -71,7 +71,7 @@ module RGL
 
     # Create a new GraphVisitor on _graph_.
 
-    def initialize (graph)
+    def initialize(graph)
       super graph
       reset
     end
@@ -84,7 +84,7 @@ module RGL
 
     # Returns true if vertex _v_ is colored :BLACK (i.e. finished).
 
-    def finished_vertex? (v)
+    def finished_vertex?(v)
       @color_map[v] == :BLACK
     end
  
@@ -97,19 +97,19 @@ module RGL
     # After the distance_map is attached, the visitor has a new method
     # distance_to_root, which answers the distance to the start vertex.
 
-    def attach_distance_map (map = Hash.new(0))
+    def attach_distance_map(map = Hash.new(0))
       @dist_map = map
 
       class << self
 
-        def handle_tree_edge (u, v)
+        def handle_tree_edge(u, v)
           super
           @dist_map[v] = @dist_map[u] + 1
         end
 
         # Answer the distance to the start vertex.
 
-        def distance_to_root (v)
+        def distance_to_root(v)
           @dist_map[v]
         end
 
@@ -118,20 +118,20 @@ module RGL
 
     # Shall we follow the edge (u,v); i.e. v has color :WHITE
 
-    def follow_edge? (u, v)			# :nodoc:
+    def follow_edge?(u, v)			# :nodoc:
       @color_map[v] == :WHITE
     end
 
     # == Visitor Event Points
 
-    def self.def_event_handler (m)
+    def self.def_event_handler(m)
       params = m =~ /edge/ ? "u,v" : "u"
       self.class_eval %{
-        def handle_#{m} (#{params})
+        def handle_#{m}(#{params})
           @#{m}_event_handler.call(#{params}) if defined? @#{m}_event_handler
         end
 
-        def set_#{m}_event_handler (&b)
+        def set_#{m}_event_handler(&b)
           @#{m}_event_handler = b
         end
       }
@@ -166,7 +166,7 @@ module RGL
 
     # Create a new BFSIterator on _graph_, starting at vertex _start_.
 
-    def initialize (graph, start=graph.detect{ |x| true })
+    def initialize(graph, start=graph.detect{ |x| true })
       super(graph)
       @start_vertex = start
       set_to_begin
@@ -227,7 +227,7 @@ module RGL
 
     # Returns a BFSIterator, starting at vertex _v_.
 
-    def bfs_iterator (v = self.detect { |x| true})
+    def bfs_iterator(v = self.detect { |x| true})
       BFSIterator.new(self, v)
     end
 
@@ -235,8 +235,8 @@ module RGL
     # starting at _v_.  This method uses the tree_edge_event of BFSIterator
     # to record all tree edges of the search tree in the result.
 
-    def bfs_search_tree_from (v)
-      require 'rgl/adjacency'
+    def bfs_search_tree_from(v)
+      require_relative 'adjacency'
       bfs  = bfs_iterator(v)
       tree = DirectedAdjacencyGraph.new
       bfs.set_tree_edge_event_handler { |from, to|
@@ -289,7 +289,7 @@ module RGL
 
     # Returns a DFSIterator staring at vertex _v_.
 
-    def dfs_iterator (v = self.detect { |x| true })
+    def dfs_iterator(v = self.detect { |x| true })
       DFSIterator.new(self, v)
     end
 
@@ -297,7 +297,7 @@ module RGL
     # it is called on each _finish_vertex_ event.  See
     # strongly_connected_components for an example usage.
 
-    def depth_first_search (vis = DFSVisitor.new(self), &b)
+    def depth_first_search(vis = DFSVisitor.new(self), &b)
       each_vertex do |u|
         unless vis.finished_vertex?(u)
           vis.handle_start_vertex(u)
@@ -309,7 +309,7 @@ module RGL
     # Start a depth first search at vertex _u_.  The block _b_ is called on
     # each finish_vertex event.
 
-    def depth_first_visit (u, vis = DFSVisitor.new(self), &b)
+    def depth_first_visit(u, vis = DFSVisitor.new(self), &b)
       vis.color_map[u] = :GRAY
       vis.handle_examine_vertex(u)
       each_adjacent(u) { |v|

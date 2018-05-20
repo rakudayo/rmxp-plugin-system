@@ -12,7 +12,7 @@
 # Set.  This can be configured by the client, however, when an AdjacencyGraph
 # is created.
 
-require 'rgl/mutable'
+require_relative 'mutable'
 require 'set'
 
 module RGL
@@ -26,7 +26,7 @@ module RGL
     #  RGL::DirectedAdjacencyGraph[1,2, 2,3, 2,4, 4,5].edges.to_a.to_s =>
     #    "(1-2)(2-3)(2-4)(4-5)"
 
-    def self.[] (*a)
+    def self.[](*a)
       result = new
       0.step(a.size-1, 2) { |i| result.add_edge(a[i], a[i+1]) }
       result
@@ -38,7 +38,7 @@ module RGL
     #
     # If other graphs are passed as parameters their vertices and edges are
     # added to the new graph.
-    def initialize (edgelist_class = Set, *other_graphs)
+    def initialize(edgelist_class = Set, *other_graphs)
       @edgelist_class = edgelist_class
       @vertice_dict   = Hash.new
       other_graphs.each do |g|
@@ -57,11 +57,11 @@ module RGL
 
     # Iterator for the keys of the vertice list hash.
 
-    def each_vertex (&b)
+    def each_vertex(&b)
       @vertice_dict.each_key(&b)
     end
 
-    def each_adjacent (v, &b)			# :nodoc:
+    def each_adjacent(v, &b)			# :nodoc:
       adjacency_list = (@vertice_dict[v] or
         raise NoVertexError, "No vertex #{v}.")
       adjacency_list.each(&b)
@@ -76,7 +76,7 @@ module RGL
     # Complexity is O(1), because the vertices are kept in a Hash containing
     # as values the lists of adjacent vertices of _v_.
 
-    def has_vertex? (v)
+    def has_vertex?(v)
       @vertice_dict.has_key?(v)
     end
 
@@ -86,7 +86,7 @@ module RGL
     # ---
     # MutableGraph interface.
 
-    def has_edge? (u, v)
+    def has_edge?(u, v)
       has_vertex?(u) and @vertice_dict[u].include?(v)
     end
 
@@ -95,13 +95,13 @@ module RGL
     # If the vertex is already in the graph (using eql?), the method does
     # nothing.
 
-    def add_vertex (v)
+    def add_vertex(v)
       @vertice_dict[v] ||= @edgelist_class.new
     end
 
     # See MutableGraph#add_edge.
 
-    def add_edge (u, v)
+    def add_edge(u, v)
       add_vertex(u)                         # ensure key
       add_vertex(v)                         # ensure key
       basic_add_edge(u, v)
@@ -109,7 +109,7 @@ module RGL
 
     # See MutableGraph#remove_vertex.
 
-    def remove_vertex (v)
+    def remove_vertex(v)
       @vertice_dict.delete(v)
           
       # remove v from all adjacency lists
@@ -119,7 +119,7 @@ module RGL
 
     # See MutableGraph::remove_edge.
 
-    def remove_edge (u, v)
+    def remove_edge(u, v)
       @vertice_dict[u].delete(v) unless @vertice_dict[u].nil?
     end
 
@@ -134,7 +134,7 @@ module RGL
 
     protected
 
-    def basic_add_edge (u, v)
+    def basic_add_edge(u, v)
       @vertice_dict[u].add(v)
     end
 
@@ -152,14 +152,14 @@ module RGL
         
     # Also removes (v,u)
 
-    def remove_edge (u, v)
+    def remove_edge(u, v)
       super
       @vertice_dict[v].delete(u) unless @vertice_dict[v].nil?
     end
 
     protected
 
-    def basic_add_edge (u,v)
+    def basic_add_edge(u,v)
       super
       @vertice_dict[v].add(u)			# Insert backwards edge
     end

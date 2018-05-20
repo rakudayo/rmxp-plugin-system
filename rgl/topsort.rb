@@ -1,6 +1,6 @@
 # topsort.rb
 
-require 'rgl/traversal'
+require_relative 'traversal'
 
 module RGL
 
@@ -18,7 +18,7 @@ module RGL
 
     include GraphIterator
 
-    def initialize (g)
+    def initialize(g)
       super(g)
       set_to_begin
     end
