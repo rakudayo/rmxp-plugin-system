@@ -70,11 +70,12 @@ _Requirements_
 * Ruby Interpreter - Get the [most recent version here](http://www.ruby-lang.org/en/). It is required to run the utility scripts outside of RMXP. You will need a version with the YAML and Zlib modules.
 * RPG Maker XP - For RMXP games
 * RPG Maker VX - For RMVX games
-* Windows XP - I believe this should work on Windows Vista or Windows 7 also. The only potential problem I forsee could be the batch file commands.
+* Windows - Tested on Windows 10
 * (Optional) Versioning System - If you want to keep track of versions of your exported data, you will need a versioning system like [Git](http://git-scm.com/), [Mercurial](http://mercurial.selenic.com/), or [Subversion](http://subversion.apache.org/).
 
 _Setup_
 
+* Install the `listen` and `wdm` gems (though this should be done automatically).
 * Download the latest version of RMXP Plugin System in this repo (as a ZIP at top of this page or cloning using Git).
 * Back up your project (just copy it somewhere for safe-keeping).
 * Extract the archive into a directory or your choice. NOTE: If you wish to use this in multiple projects, it is best to create a folder in the same directory as your projects and extract to that folder. Just make sure to update the PLUGIN_SYSTEM_ROOT and RMXP_PROJECT_ROOT variables set in Game.bat (see below default Game.bat). A sample directory hierarchy is below:
